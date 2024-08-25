@@ -54,7 +54,7 @@ WHERE row_num > 1;
 ```
 ![Screenshot showing duplicate rows](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Screenshot%20showing%20duplicate%20rows.png)
 
--- It will be impossible to delete columns from CTE tables. So, we'll create a second staging table and add the `row_num` column
+It would be impossible to delete columns from CTE tables. So, we'll create a second staging table and add the `row_num` column
 ```
 CREATE TABLE `layoff_data1` (
   `company` text,
@@ -121,7 +121,13 @@ ORDER BY 1;
 
 The above screenshot shows that there are different variations of Crypto%. We'll update it to one name, Crypto.
 
+Here is a simple footnote[^1].
 
+A footnote can also have multiple lines[^2].
+
+[^1]: My reference.
+[^2]: To add line breaks within a footnote, prefix new lines with 2 spaces.
+  This is a second line.
 
 
 
