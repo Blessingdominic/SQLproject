@@ -84,8 +84,7 @@ WHERE row_num > 1;
 ```
 The above query will return the same image result showing the duplicate rows
 
-
-Now, we can delete the duplicate rows
+  Now, we can delete the duplicate rows
 ```
 DELETE 
 FROM layoff_data1
@@ -121,13 +120,9 @@ ORDER BY 1;
 
 The above screenshot shows that there are different variations of Crypto%. We'll update it to one name, Crypto.
 
-Here is a simple footnote[^1].
 
-A footnote can also have multiple lines[^2].
 
-[^1]: My reference.
-[^2]: To add line breaks within a footnote, prefix new lines with 2 spaces.
-  This is a second line.
+
 
 
 
