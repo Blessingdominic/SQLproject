@@ -84,6 +84,7 @@ WHERE row_num > 1;
 ```
 The above query will return the same image result showing the duplicate rows
 
+
 Now, we can delete the duplicate rows
 ```
 DELETE 
@@ -110,14 +111,15 @@ UPDATE layoff_data1
 SET company = TRIM(company);
 ```
 
-### Distinct Names
+#### Distinct Names
 ```
 SELECT DISTINCT industry
 FROM layoff_data1
 ORDER BY 1;
 ```
 ![Screenshot showing distinct industries](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Screenshot%20showing%20distinct%20industries.png)
-The above screenshot shows that there are different variations of Crypto%. We'll update it to one name, Crypto
+
+The above screenshot shows that there are different variations of Crypto%. We'll update it to one name, Crypto.
 
 
 
