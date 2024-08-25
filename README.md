@@ -23,7 +23,7 @@ INSERT layoff_staging
 SELECT * 
 FROM layoffs;
 ```
-![]()
+![`layoffs` data duplicated into `layoff_data` table](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/%60layoffs%60%20data%20duplicated%20into%20%60layoff_data%60%20table.png)
 
 
 
