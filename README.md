@@ -33,8 +33,8 @@ FROM layoff_data;
 First, assign row numbers to each record to know which row is duplicated, i.e., >1
 ```
 SELECT *,
-ROW_NUMBER() OVER(PARTITION BY company, location, industry, total_laid_off, 
-percentage_laid_off, `date`, stage, country, funds_raised_millions) AS row_num
+  ROW_NUMBER() OVER(PARTITION BY company, location, industry, total_laid_off, 
+    percentage_laid_off, `date`, stage, country, funds_raised_millions) AS row_num
 FROM layoff_data;
 ```
 ![Screenshot showing row numbers assigned to each record](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Screenshot%20showing%20row%20numbers%20assigned%20to%20each%20record.png)
