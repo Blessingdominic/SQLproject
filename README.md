@@ -17,4 +17,4 @@ FROM world_layoffs.layoffs;
 CREATE TABLE layoff_staging
 LIKE layoffs;
 ```
-![screenshot of layoff_data table created]([https://onedrive.live.com/?cid=2CC54BB9DEC5CE43&id=2CC54BB9DEC5CE43%21sa1050ba37146454db0da9a944f4ee504&parId=2CC54BB9DEC5CE43%21s2c54ba3b1fd74bfc96a79f2d5f308c04&o=OneUp](https://1drv.ms/i/c/2cc54bb9dec5ce43/EaMLBaFGcU1FsNqalE9O5QQBKuTVsSbJXAR5GCLYpEFJ6Q?e=fMIqY8))
+![screenshot of layoff_data table created](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/screenshot%20of%20layoff_data%20table%20created.png)
