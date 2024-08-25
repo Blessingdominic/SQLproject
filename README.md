@@ -17,4 +17,13 @@ FROM world_layoffs.layoffs;
 CREATE TABLE layoff_staging
 LIKE layoffs;
 ```
-![screenshot of layoff_data table created](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/screenshot%20of%20layoff_data%20table%20created.png)
+
+```
+INSERT layoff_staging
+SELECT * 
+FROM layoffs;
+```
+![]()
+
+
+
