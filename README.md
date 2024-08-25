@@ -39,3 +39,29 @@ FROM layoff_data;
 ```
 ![Screenshot showing row numbers assigned to each record](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Screenshot%20showing%20row%20numbers%20assigned%20to%20each%20record.png)
 
+We'll look at the rows that are duplicated (row_num > 1)
+```
+WITH duplicate_cte AS
+(
+SELECT *,
+ROW_NUMBER() OVER(PARTITION BY company, location, industry, total_laid_off, 
+percentage_laid_off, `date`, stage, country, funds_raised_millions) AS row_num
+FROM layoff_data
+)
+SELECT *
+FROM duplicate_cte
+WHERE row_num > 1;
+```
+![Screenshot showing duplicate rows](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Screenshot%20showing%20duplicate%20rows.png)
+
+
+
+
+
+
+
+
+
+
+
+
