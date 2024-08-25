@@ -27,7 +27,7 @@ FROM layoffs;
 SELECT *
 FROM layoff_data;
 ```
-![`layoffs` data duplicated into `layoff_data` table](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/%60layoffs%60%20data%20duplicated%20into%20%60layoff_data%60%20table.png)
+![`layoffs` data duplicated into `layoff_data` table](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/%60layoffs%60%20data%20duplicated%20into%20%60layoff_data%60%20table.png)
 
 ### Remove Duplicates
 First, assign row numbers to each record to know which row is duplicated, i.e., >1
@@ -37,7 +37,7 @@ ROW_NUMBER() OVER(PARTITION BY company, location, industry, total_laid_off,
 percentage_laid_off, `date`, stage, country, funds_raised_millions) AS row_num
 FROM layoff_data;
 ```
-![Screenshot showing row numbers assigned to each record](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Screenshot%20showing%20row%20numbers%20assigned%20to%20each%20record.png)
+![Screenshot showing row numbers assigned to each record](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20showing%20row%20numbers%20assigned%20to%20each%20record.png)
 
 We'll look at the rows that are duplicated (row_num > 1)
 ```
@@ -52,7 +52,7 @@ SELECT *
 FROM duplicate_cte
 WHERE row_num > 1;
 ```
-![Screenshot showing duplicate rows](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Screenshot%20showing%20duplicate%20rows.png)
+![Screenshot showing duplicate rows](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20showing%20duplicate%20rows.png)
 
 It would be impossible to delete columns from CTE tables. So, we'll create a second staging table and add the `row_num` column
 ```
@@ -84,7 +84,7 @@ WHERE row_num > 1;
 ```
 The above query will return the same image result showing the duplicate rows
 
-  Now, we can delete the duplicate rows
+Now, we can delete the duplicate rows
 ```
 DELETE 
 FROM layoff_data1
@@ -95,7 +95,7 @@ SELECT *
 FROM layoff_data1
 WHERE row_num > 1;
 ```
-![Screenshot showing duplicate rows deleted](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Screenshot%20showing%20duplicate%20rows%20deleted.png)
+![Screenshot showing duplicate rows deleted](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20showing%20duplicate%20rows%20deleted.png)
 
 ### Standardizing data
 #### Trim data
@@ -103,7 +103,7 @@ WHERE row_num > 1;
 SELECT company, TRIM(company)
 FROM layoff_data1;
 ```
-![Screenshot showing TRIMMED data](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Screenshot%20showing%20TRIMMED%20data.png)
+![Screenshot showing TRIMMED data](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20showing%20TRIMMED%20data.png)
 
 ```
 UPDATE layoff_data1
@@ -116,18 +116,89 @@ SELECT DISTINCT industry
 FROM layoff_data1
 ORDER BY 1;
 ```
-![Screenshot showing distinct industries](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Screenshot%20showing%20distinct%20industries.png)
+![Screenshot showing distinct industries](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20showing%20distinct%20industries.png)
 
 The above screenshot shows that there are different variations of Crypto%. We'll update it to one name, Crypto.
+```
+SELECT *
+FROM layoff_data1
+WHERE industry LIKE 'Crypto%';
+```
+```
+UPDATE layoff_data1
+SET industry = 'Crypto'
+WHERE industry LIKE 'Crypto%';
+```
+Do the same for the country column
+```
+SELECT DISTINCT country
+FROM layoff_data1
+ORDER BY 1;
+```
+1[Screenshot showing duplicate country](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20showing%20duplicate%20country.png)
+
+The above image shows that there are two entries for `United States(.)`
+```
+SELECT *
+FROM layoff_data1
+WHERE country = 'United States.';
+```
 
 
+```
+UPDATE layoff_data1
+SET country = 'United States'
+WHERE country = 'United States.';
+```
+OR
+```
+UPDATE layoff_data1
+SET country = TRIM(TRAILING '.' FROM country)
+WHERE country = 'United States%';
+```
 
+#### Convert `date` column from `STR to DATE`
+```
+SELECT `date`
+FROM layoff_data1;
+```
+![Screenshot of date column in string format](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20of%20date%20column%20in%20string%20format.png)
 
+```
+UPDATE layoff_data1
+SET `date` = STR_TO_DATE(`date`, '%m/%d/%Y');
+```
 
+The date column is still in text format in the schema even when in date format. We have to modify the table
+```
+ALTER TABLE layoff_data1
+MODIFY COLUMN `date` DATE;
+```
 
+### Null or blank values
+```
+SELECT *
+FROM layoff_data1
+WHERE total_laid_off IS NULL
+AND percentage_laid_off IS NULL;
+```
+![Screenshot showing null values](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20showing%20null%20values.png)
 
+```
+SELECT *
+FROM layoff_data1
+WHERE industry IS NULL 
+OR industry = '';
+```
 
-
-
+Let's try to fill up the industries with null or blank values by checking out other rows of the same companies that are filled
+```
+SELECT *
+FROM layoff_data1 t1
+JOIN layoff_data1 t2
+	ON t1.company = t2.company
+WHERE (t1.industry IS NULL OR t1.industry = '')
+AND t2.industry IS NOT NULL;
+```
 
 
