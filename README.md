@@ -135,7 +135,7 @@ SELECT DISTINCT country
 FROM layoff_data1
 ORDER BY 1;
 ```
-1[Screenshot showing duplicate country](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20showing%20duplicate%20country.png)
+![Screenshot showing duplicate country](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20showing%20duplicate%20country.png)
 
 The above image shows that there are two entries for `United States(.)`
 ```
@@ -191,7 +191,7 @@ WHERE industry IS NULL
 OR industry = '';
 ```
 
-Let's try to fill up the industries with null or blank values by checking out other rows of the same companies that are filled
+Let's populate the null/blank values in the industry column 
 ```
 SELECT *
 FROM layoff_data1 t1
@@ -200,5 +200,54 @@ JOIN layoff_data1 t2
 WHERE (t1.industry IS NULL OR t1.industry = '')
 AND t2.industry IS NOT NULL;
 ```
+
+**Update the blank rows in the industry column to null values to update the rows, else the following query won't work**
+```
+UPDATE layoff_data1
+SET industry = null
+WHERE industry = '';
+```
+
+The query below populates the null values with the appropriate industry
+```
+UPDATE layoff_data1 t1
+JOIN layoff_data1 t2
+	ON t1.company = t2.company
+SET t1.industry = t2.industry
+WHERE t1.industry IS NULL
+AND t2.industry IS NOT NULL;
+```
+
+### Remove Unnecessary Columns
+```
+SELECT *
+FROM layoff_data1
+WHERE total_laid_off IS NULL
+AND percentage_laid_off IS NULL;
+```
+```
+DELETE
+FROM layoff_data1
+WHERE total_laid_off IS NULL
+AND percentage_laid_off IS NULL;
+```
+```
+ALTER TABLE layoff_data1
+DROP COLUMN row_num;
+```
+
+```
+SELECT *
+FROM layoff_data1;
+```
+
+
+
+
+
+
+
+
+
 
 
