@@ -225,6 +225,8 @@ FROM layoff_data1
 WHERE total_laid_off IS NULL
 AND percentage_laid_off IS NULL;
 ```
+![Screenshot showing TLO and PLO null](https://raw.githubusercontent.com/Blessingdominic/SQLproject/main/Sql%20project%20images/Screenshot%20showing%20null%20values.png)
+
 ```
 DELETE
 FROM layoff_data1
